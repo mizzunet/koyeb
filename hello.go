@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"os"
 	"context"
 	"log"
 	"strings"
@@ -63,7 +65,7 @@ func getMarket() DATA {
 
 func headless() string {
 	chromeBin := os.Getenv("GOOGLE_CHROME_SHIM")
-	log.Info("chrome path: %+v", chromeBin)
+	fmt.Println("chrome path: %+v", chromeBin)
 
 	options := []chromedp.ExecAllocatorOption{
 	        chromedp.ExecPath(chromeBin),
@@ -71,8 +73,12 @@ func headless() string {
 	        chromedp.Flag("blink-settings", "imageEnable=false"),
 	        chromedp.UserAgent(`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko)`),
 	}
+
+	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), options...)
+	defer cancel()
+
 		// create context
-	ctx, cancel := chromedp.NewContext(context.Background())
+	ctx, cancel := chromedp.NewContext(allocCtx)
 	defer cancel()
 
 	// run task list
