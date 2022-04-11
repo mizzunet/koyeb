@@ -62,7 +62,16 @@ func getMarket() DATA {
 }
 
 func headless() string {
-	// create context
+	chromeBin := os.Getenv("GOOGLE_CHROME_SHIM")
+	log.Info("chrome path: %+v", chromeBin)
+
+	options := []chromedp.ExecAllocatorOption{
+	        chromedp.ExecPath(chromeBin),
+	        chromedp.Flag("headless", true),
+	        chromedp.Flag("blink-settings", "imageEnable=false"),
+	        chromedp.UserAgent(`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko)`),
+	}
+		// create context
 	ctx, cancel := chromedp.NewContext(context.Background())
 	defer cancel()
 
