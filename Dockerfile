@@ -5,6 +5,7 @@ WORKDIR /build
 RUN go build
 
 FROM alpine
+RUN echo hellow
 RUN adduser -S -D -H -h /app appuser
 USER appuser
 COPY --from=builder /build/helloworld /app/
