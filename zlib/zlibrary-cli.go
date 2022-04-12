@@ -31,7 +31,7 @@ func DownloadBook(query string) Output {
 	}
 
 	base := headless.GetRedirectURL("https://1lib.domains/?redirectUrl=/")
-	queryURL := base + "/s/" + query + filters
+	queryURL := base + "s/" + query + filters
 	log.Println("Querying ", query)
 	bow := surf.NewBrowser()
 	url := queryURL
