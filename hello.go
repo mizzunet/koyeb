@@ -25,7 +25,8 @@ func zlib_do(c *gin.Context) {
 	o := zlib.DownloadBook(f.Query)
 	c.JSON(200, gin.H{
 		"name":  o.Name,
-		"link":  o.Link,
+		"url":   o.URL,
+		"ip":    o.IP,
 		"error": o.Error,
 	})
 }

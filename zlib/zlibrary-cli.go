@@ -4,22 +4,50 @@ import (
 	// "fmt"
 	"example.com/headless"
 
-	"github.com/root-gg/plik/plik"
+	// "github.com/root-gg/plik/plik"
 	"log"
 	"os"
 	// "strings"
 
+	"example.com/myip"
+	"example.com/upload"
 	"gopkg.in/headzoo/surf.v1"
 )
 
 type Output struct {
 	Name  string
-	Link  string
+	URL   string
 	Error string
 	IP    string
 }
 
 var ret Output
+
+func prepareFile(author, name string) (*os.File, string) {
+
+	path := "./download/"
+	fullpath := path + author + " - " + name + ".epub"
+
+	// check if file exists
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		log.Println(path, " not found, making it.")
+		os.Mkdir(path, 0755)
+	}
+	if _, err := os.Stat(fullpath); !os.IsNotExist(err) {
+		log.Println("File already been downloaded at ", fullpath)
+	}
+
+	file, err := os.Create(fullpath)
+	if err != nil {
+		log.Println("Failed to create file \n", err)
+		ret.Error = "Failed to create file"
+		// return ret
+
+		log.Println("Folder: ", path)
+
+	}
+	return file, fullpath
+}
 
 func DownloadBook(query string) Output {
 	filters := "?extensions[]=epub"
@@ -31,6 +59,9 @@ func DownloadBook(query string) Output {
 	}
 
 	base := headless.GetRedirectURL("https://1lib.domains/?redirectUrl=/")
+	if base == "https://1lib.domains/?redirectUrl=/" {
+		base = "https://u1lib.org/"
+	}
 	queryURL := base + "s/" + query + filters
 	log.Println("Querying ", query)
 	bow := surf.NewBrowser()
@@ -104,49 +135,8 @@ func DownloadBook(query string) Output {
 	// link := uploadFile(filepath)
 
 	ret.Name = name
-	ret.Link = uploadFile(path)
+	ret.URL = upload.UploadFilePath(path)
 	ret.Error = "0"
+	ret.IP = myip.GetIP()
 	return ret
-}
-func prepareFile(author, name string) (*os.File, string) {
-
-	path := "./download/"
-	fullpath := path + author + " - " + name + ".epub"
-
-	// check if file exists
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		log.Println(path, " not found, making it.")
-		os.Mkdir(path, 0755)
-	}
-	if _, err := os.Stat(fullpath); !os.IsNotExist(err) {
-		log.Println("File already been downloaded at ", fullpath)
-	}
-
-	file, err := os.Create(fullpath)
-	if err != nil {
-		log.Println("Failed to create file \n", err)
-		ret.Error = "Failed to create file"
-		// return ret
-
-		log.Println("Folder: ", path)
-
-	}
-	return file, fullpath
-}
-
-func uploadFile(f string) string {
-	client := plik.NewClient("https://plik.root.gg")
-
-	upload := client.NewUpload()
-	file, err := upload.AddFileFromPath(f)
-	log.Println("Uploading.. ", f)
-
-	err = file.Upload()
-	if err != nil {
-		log.Println("some erre", err)
-	}
-	uploadURL, err := upload.GetURL()
-	log.Println("Uploaded")
-	log.Println(uploadURL)
-	return uploadURL.String()
 }
