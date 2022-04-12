@@ -19,8 +19,7 @@ type DATA struct {
 }
 
 func zlib_do(c *gin.Context) {
-	ip := myip.GetIP()
-	log.Println("Doing zlib, IP: ", ip)
+	log.Println("Doing zlib, IP: ", myip.GetIP())
 	var f Zlib
 	c.Bind(&f)
 	o := zlib.DownloadBook(f.Query)
