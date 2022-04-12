@@ -9,7 +9,7 @@ import (
 	"os"
 	// "strings"
 
-	"example.com/myip"
+	// "example.com/myip"
 	"gopkg.in/headzoo/surf.v1"
 )
 
