@@ -1,16 +1,15 @@
 package zlib
 
 import (
-	// "fmt"
 	"example.com/headless"
+	// "example.com/uploadfile"
 
-	// "github.com/root-gg/plik/plik"
+	"github.com/root-gg/plik/plik"
 	"log"
 	"os"
 	// "strings"
 
 	"example.com/myip"
-	"example.com/upload"
 	"gopkg.in/headzoo/surf.v1"
 )
 
@@ -49,6 +48,24 @@ func prepareFile(author, name string) (*os.File, string) {
 	return file, fullpath
 }
 
+func UploadFilePath(f string) string {
+	client := plik.NewClient("https://plik.root.gg")
+
+	upload := client.NewUpload()
+	file, err := upload.AddFileFromPath(f)
+	log.Println("Uploading.. ", f)
+
+	err = file.Upload()
+	if err != nil {
+		log.Println("some erre", err)
+	}
+	uploadURL, err := upload.GetURL()
+	fileURL, err := file.GetURL()
+	log.Println("Uploaded")
+	log.Println(uploadURL)
+
+	return fileURL.String()
+}
 func DownloadBook(query string) Output {
 	filters := "?extensions[]=epub"
 	// query := strings.TrimSpace(strings.Join(q, " "))
@@ -135,7 +152,7 @@ func DownloadBook(query string) Output {
 	// link := uploadFile(filepath)
 
 	ret.Name = name
-	ret.URL = upload.UploadFilePath(path)
+	ret.URL = UploadFilePath(path)
 	ret.Error = "0"
 	ret.IP = myip.GetIP()
 	return ret

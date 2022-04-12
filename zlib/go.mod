@@ -2,18 +2,21 @@ module example.com/zlib
 
 go 1.18
 
+replace example.com/myip => ../myip/
+
+replace example.com/headless => ../headless/
+
 require (
 	example.com/headless v0.0.0-00010101000000-000000000000
 	example.com/myip v0.0.0-00010101000000-000000000000
-	example.com/upload v0.0.0-00010101000000-000000000000
 	github.com/root-gg/plik v0.0.0-20220217080014-93cd25d42e4e
 	gopkg.in/headzoo/surf.v1 v1.0.1
 )
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
-	github.com/PuerkitoBio/goquery v1.8.0 // indirect
-	github.com/andybalholm/cascadia v1.3.1 // indirect
+	github.com/PuerkitoBio/goquery v1.5.1 // indirect
+	github.com/andybalholm/cascadia v1.2.0 // indirect
 	github.com/antchfx/htmlquery v1.2.3 // indirect
 	github.com/antchfx/xmlquery v1.2.4 // indirect
 	github.com/antchfx/xpath v1.1.8 // indirect
@@ -49,7 +52,7 @@ require (
 	github.com/temoto/robotstxt v1.1.1 // indirect
 	github.com/xhit/go-str2duration/v2 v2.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
-	golang.org/x/net v0.0.0-20210916014120-12bc252f5db8 // indirect
+	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
@@ -57,9 +60,3 @@ require (
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 	gorm.io/gorm v1.22.3 // indirect
 )
-
-replace example.com/headless => ../headless/
-
-replace example.com/myip => ../myip/
-
-replace example.com/upload => ../upload/
