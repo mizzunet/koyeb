@@ -7,8 +7,6 @@ import (
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"log"
-	// "strings"
-	// "fmt"
 )
 
 type Zlib struct {
@@ -51,6 +49,7 @@ func stock_do(c *gin.Context) {
 }
 func main() {
 	// fmt.Println(i.status)
+	log.Println("Starting")
 	r := gin.Default()
 
 	r.GET("/hello", func(c *gin.Context) {

@@ -57,8 +57,8 @@ func DownloadBook(query string) Output {
 
 	// exit in unknown case
 	if name == "" {
-		log.Println("Unknown error occured", absoluteURL)
-		ret.Error = "Unknown error occured" + absoluteURL
+		log.Println("Unknown error occured ", absoluteURL)
+		ret.Error = "Unknown error occured " + absoluteURL + bow.Title + bow.Body + bow.Status()
 		return ret
 	}
 	log.Println("Book: ", name)
