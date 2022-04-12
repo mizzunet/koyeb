@@ -2,6 +2,7 @@ package zlib
 
 import (
 	// "fmt"
+	"example.com/headless"
 
 	"github.com/root-gg/plik/plik"
 	"log"
@@ -29,7 +30,7 @@ func DownloadBook(query string) Output {
 		return ret
 	}
 
-	base := "https://u1lib.org/s/"
+	base := headless.GetRedirectURL("https://1lib.domains/?redirectUrl=/")
 	queryURL := base + query + filters
 	log.Println("Querying ", query)
 	bow := surf.NewBrowser()
