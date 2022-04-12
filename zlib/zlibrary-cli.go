@@ -28,7 +28,7 @@ func DownloadBook(query string) Output {
 		return ret
 	}
 
-	base := "https://1lib.in/s/"
+	base := "https://u1lib.org/s/"
 	queryURL := base + query + filters
 	log.Println("Querying ", query)
 	bow := surf.NewBrowser()
