@@ -28,13 +28,16 @@ func Scrape() string {
 
 	// run task list
 	var res string
+	var title string
 	err := chromedp.Run(ctx,
-		chromedp.Navigate(`https://pkg.go.dev/time`),
-		chromedp.Text(`.Documentation-overview`, &res, chromedp.NodeVisible),
+		chromedp.Navigate(`https://1lib.domains/?redirectUrl=/`),
+		chromedp.Title(&title),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	log.Println(title)
 
 	return strings.TrimSpace(res)
 }
