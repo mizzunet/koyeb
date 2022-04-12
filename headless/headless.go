@@ -29,15 +29,17 @@ func Scrape() string {
 	// run task list
 	var res string
 	var title string
+	var loc string
 	err := chromedp.Run(ctx,
 		chromedp.Navigate(`https://1lib.domains/?redirectUrl=/`),
 		chromedp.Title(&title),
+		chromedp.Location(&loc),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println(title)
+	log.Println(title, loc)
 
 	return strings.TrimSpace(res)
 }
