@@ -24,10 +24,10 @@ func zlib_do(c *gin.Context) {
 	c.Bind(&f)
 	o := zlib.DownloadBook(f.Query)
 	c.JSON(200, gin.H{
-		"name":  o.Name,
-		"url":   o.URL,
-		"ip":    o.IP,
 		"error": o.Error,
+		"url":   o.URL,
+		"name":  o.Name,
+		"file":  o.File,
 	})
 }
 func headless_do(c *gin.Context) {

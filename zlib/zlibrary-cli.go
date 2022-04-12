@@ -15,17 +15,19 @@ import (
 
 type Output struct {
 	Name  string
+	File  string
 	URL   string
 	Error string
-	IP    string
+	// IP    string
 }
 
 var ret Output
 
-func prepareFile(author, name string) (*os.File, string) {
+func prepareFile(author, name string) (*os.File, string, string) {
 
 	path := "./download/"
-	fullpath := path + author + " - " + name + ".epub"
+	filename := author + " - " + name + ".epub"
+	fullpath := path + filename
 
 	// check if file exists
 	if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -45,7 +47,7 @@ func prepareFile(author, name string) (*os.File, string) {
 		log.Println("Folder: ", path)
 
 	}
-	return file, fullpath
+	return file, fullpath, filename
 }
 
 func UploadFilePath(f string) string {
@@ -94,7 +96,7 @@ func DownloadBook(query string) Output {
 	}
 	// exit if no resule
 	if bow.Find("div.notFound").Text() == "On your request nothing has been found. Do you want to create a ZAlert on this query?" {
-		log.Println("No books found for ", query)
+		log.Println("No books found for at ", queryURL)
 		ret.Error = "No books found for"
 		return ret
 	}
@@ -136,7 +138,7 @@ func DownloadBook(query string) Output {
 	}
 
 	// prepare file to be written
-	file, path := prepareFile(name, author)
+	file, path, filename := prepareFile(name, author)
 
 	// download the book
 	_, err = bow.Download(file)
@@ -152,8 +154,9 @@ func DownloadBook(query string) Output {
 	// link := uploadFile(filepath)
 
 	ret.Name = name
+	ret.File = filename
 	ret.URL = UploadFilePath(path)
 	ret.Error = "0"
-	ret.IP = myip.GetIP()
+	// ret.IP = myip.GetIP()
 	return ret
 }
