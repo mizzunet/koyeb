@@ -37,6 +37,7 @@ func DownloadBook(query string) Output {
 	url := queryURL
 
 	// open search url
+	log.Println("Visiting ", queryURL)
 	err := bow.Open(url)
 	if err != nil {
 		log.Println("Failed to open link", url, err)
@@ -68,13 +69,13 @@ func DownloadBook(query string) Output {
 
 	// open the book's page
 	bow.Open(absoluteURL)
-	fmt.Println("Visiting: ", absoluteURL)
+	log.Println("Visiting: ", absoluteURL)
 
 	// get download link
 	downloadLink, bool := bow.Find("a.addDownloadedBook").Attr("href")
 	if bool == false {
-	log.Fatal("Failed to get download link from ", bow.Url())
-	// }
+		log.Fatal("Failed to get download link from ", bow.Url())
+	}
 	log.Println("Downloading from ", downloadLink)
 
 	// redirect to download
@@ -107,23 +108,6 @@ func DownloadBook(query string) Output {
 	ret.Error = "0"
 	return ret
 }
-
-// func queryURL(q []string) string {
-// filters := "?extensions[]=epub"
-// query := strings.TrimSpace(strings.Join(q, " "))
-// if query == "" {
-// log.Fatal("Search for something!")
-// ret.Error = "Search for something!"
-// return ret
-// }
-
-// base := "https://1lib.in/s/"
-// queryURL := base + query + filters
-// log.Println("Querying ", q)
-// fmt.Println("Visiting ", queryURL)
-
-// return (queryURL)
-// }
 func prepareFile(author, name string) (*os.File, string) {
 
 	path := "./download/"
@@ -155,7 +139,7 @@ func uploadFile(f string) string {
 
 	upload := client.NewUpload()
 	file, err := upload.AddFileFromPath(f)
-	log.Println("Uploading.. ",f)
+	log.Println("Uploading.. ", f)
 
 	err = file.Upload()
 	if err != nil {
