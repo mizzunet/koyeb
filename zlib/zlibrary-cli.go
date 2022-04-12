@@ -68,14 +68,14 @@ func DownloadBook(query string) Output {
 
 	// open the book's page
 	bow.Open(absoluteURL)
-	// fmt.Println("Visiting: ", absoluteURL)
+	fmt.Println("Visiting: ", absoluteURL)
 
 	// get download link
-	// downloadLink, bool := bow.Find("a.addDownloadedBook").Attr("href")
-	// if bool == false {
-	// log.Fatal("Failed to get download link from ", bow.Url())
+	downloadLink, bool := bow.Find("a.addDownloadedBook").Attr("href")
+	if bool == false {
+	log.Fatal("Failed to get download link from ", bow.Url())
 	// }
-	// log.Println("Downloading from ", downloadLink)
+	log.Println("Downloading from ", downloadLink)
 
 	// redirect to download
 	bow.Click("a.addDownloadedBook")
@@ -154,13 +154,15 @@ func uploadFile(f string) string {
 	client := plik.NewClient("https://plik.root.gg")
 
 	upload := client.NewUpload()
-	file, err := upload.AddFileFromPath("./download/The Way We Die Now - Seamus O’Mahony.epub")
+	file, err := upload.AddFileFromPath(f)
+	log.Println("Uploading.. ",f)
 
 	err = file.Upload()
 	if err != nil {
 		log.Println("some erre", err)
 	}
 	uploadURL, err := upload.GetURL()
+	log.Println("Uploaded")
 	log.Println(uploadURL)
 	return uploadURL.String()
 }
