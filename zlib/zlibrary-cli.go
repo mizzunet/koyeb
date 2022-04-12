@@ -15,6 +15,7 @@ type Output struct {
 	Name  string
 	Link  string
 	Error string
+	IP    string
 }
 
 var ret Output

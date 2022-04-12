@@ -2,6 +2,7 @@ package main
 
 import (
 	"example.com/headless"
+	"example.com/myip"
 	"example.com/stock"
 	"example.com/zlib"
 	"github.com/gin-gonic/contrib/static"
@@ -18,7 +19,8 @@ type DATA struct {
 }
 
 func zlib_do(c *gin.Context) {
-	log.Println("Doing zlib")
+	ip := myip.GetIP()
+	log.Println("Doing zlib, IP: ", ip)
 	var f Zlib
 	c.Bind(&f)
 	o := zlib.DownloadBook(f.Query)
