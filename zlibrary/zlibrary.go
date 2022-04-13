@@ -74,7 +74,7 @@ func downloadBook(url string) {
 	// store book info
 	book.Name = strings.TrimSpace(B.Find(".col-sm-9 > h1:nth-child(1)").Text())
 	book.Author = B.Find(".col-sm-9 > i:nth-child(2) > a:nth-child(1)").Eq(0).Text()
-	book.Format = B.Find("div.bookDetailsBox").Find("div.property__file").Find(".property_value").Text()
+	book.Format = B.Find("div.bookDetailsBox").Find("div.property__file").Find(".property_value").Eq(0).Text()
 	book.URL, _ = B.ResolveStringUrl(url)
 	book.FileName = book.Author + " - " + book.Name + ".epub"
 
@@ -127,7 +127,7 @@ func uploadBook() string {
 		fmt.Println("Failed to upload", err)
 	}
 	fileURL, err := file.GetURL()
-	fmt.Println("Uploaded!\n")
+	fmt.Println("Uploaded!")
 	fmt.Println(fileURL)
 
 	return fileURL.String()
