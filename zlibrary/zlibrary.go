@@ -1,11 +1,10 @@
 package zlibrary
 
 import (
-	// "example.com/headless"
+	"example.com/headless"
 	"fmt"
 	"github.com/root-gg/plik/plik"
 	"gopkg.in/headzoo/surf.v1"
-	// ""
 	"os"
 	"strings"
 )
@@ -32,9 +31,9 @@ var (
 	Path     = "./download/"
 	FilePath = Path + FileName
 
-	Filters = "?extensions[]=epub"
-	// Fallback = "https://u1lib.org/"
-	Fallback = "https://1lib.in/"
+	Filters  = "?extensions[]=epub"
+	Fallback = "https://u1lib.org/"
+	// Fallback = "https://1lib.in/"
 )
 
 func prepareFile(b Book) *os.File {
@@ -135,10 +134,10 @@ func Query(query string) Output {
 		return O
 	}
 
-	// base := headless.GetRedirectURL("https://1lib.domains/?redirectUrl=/")
-	// if base == "https://1lib.domains/?redirectUrl=/" {
-	base := Fallback
-	// }
+	base := headless.GetRedirectURL("https://1lib.domains/?redirectUrl=/")
+	if base == "https://1lib.domains/?redirectUrl=/" {
+		base := Fallback
+	}
 	URL := base + "s/" + query + Filters
 	fmt.Println("Querying ", query)
 
