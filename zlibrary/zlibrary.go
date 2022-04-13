@@ -34,8 +34,8 @@ var (
 
 	FileName string
 	Filters  = "?extensions[]=epub"
-	// Fallback = "https://u1lib.org/"
-	Fallback = "https://1lib.in/"
+	Fallback = "https://u1lib.org/"
+	// Fallback = "https://1lib.in/"
 )
 
 func prepareFile(b Book) *os.File {
