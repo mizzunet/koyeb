@@ -1,7 +1,9 @@
+// package main
+
 package zlibrary
 
 import (
-	"example.com/headless"
+	// "example.com/headless"
 	"fmt"
 	"github.com/root-gg/plik/plik"
 	"gopkg.in/headzoo/surf.v1"
@@ -134,10 +136,10 @@ func Query(query string) Output {
 		return O
 	}
 
-	base := headless.GetRedirectURL("https://1lib.domains/?redirectUrl=/")
-	if base == "https://1lib.domains/?redirectUrl=/" {
-		base = Fallback
-	}
+	// base := headless.GetRedirectURL("https://1lib.domains/?redirectUrl=/")
+	// if base == "https://1lib.domains/?redirectUrl=/" {
+	base := Fallback
+	// }
 	URL := base + "s/" + query + Filters
 	fmt.Println("Querying ", query)
 
@@ -182,3 +184,8 @@ func Query(query string) Output {
 
 	return O
 }
+
+// func main() {
+// query := strings.Join(os.Args[1:], " ")
+// Query(query)
+// }
