@@ -5,8 +5,12 @@ package zlibrary
 import (
 	// "example.com/headless"
 	"fmt"
+	"strconv"
+
 	"github.com/root-gg/plik/plik"
 	"gopkg.in/headzoo/surf.v1"
+
+	// "log"
 	"os"
 	"strings"
 )
@@ -78,6 +82,21 @@ func downloadBook(url string) {
 	book.URL, _ = B.ResolveStringUrl(url)
 	book.FileName = book.Author + " - " + book.Name + ".epub"
 
+	// panic if greater size
+	fr := strings.Split(book.Format, ",")
+	unit := strings.Split(fr[1], " ")
+	size, _ := strconv.ParseFloat(unit[1], 32)
+	// fmt.Println(size, byte[2], byte[1])
+	fmt.Println(size)
+	fmt.Println(unit[1])
+	fmt.Println(unit[2])
+
+	if unit[2] == "MB" {
+		if size > 8 {
+			panic("Greater file")
+		}
+	}
+
 	//print book info
 	fmt.Println("\nName: ", book.Name)
 	fmt.Println("Author: ", book.Author)
@@ -98,7 +117,7 @@ func downloadBook(url string) {
 	if B.Find(".download-limits-error__header").Text() == "Daily limit reached" {
 		fmt.Print("Daily limit reached")
 		O.Error = ("Daily limit reached")
-		os.Exit(1)
+		panic(O.Error)
 	}
 
 	// prepare file to be written
