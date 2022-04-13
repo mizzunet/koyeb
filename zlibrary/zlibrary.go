@@ -29,16 +29,19 @@ var (
 	book Book
 	O    Output
 
-	FileName = book.Author + " - " + book.Name + ".epub"
 	Path     = "./download/"
-	FilePath = Path + FileName
+	FilePath string
 
+	FileName string
 	Filters  = "?extensions[]=epub"
-	Fallback = "https://u1lib.org/"
-	// Fallback = "https://1lib.in/"
+	// Fallback = "https://u1lib.org/"
+	Fallback = "https://1lib.in/"
 )
 
 func prepareFile(b Book) *os.File {
+	FileName = b.FileName
+	FilePath = Path + FileName
+
 	// check if Path exists
 	if _, err := os.Stat(Path); os.IsNotExist(err) {
 		fmt.Println(Path, " not found, making it.")
@@ -71,14 +74,15 @@ func downloadBook(url string) {
 	// store book info
 	book.Name = strings.TrimSpace(B.Find(".col-sm-9 > h1:nth-child(1)").Text())
 	book.Author = B.Find(".col-sm-9 > i:nth-child(2) > a:nth-child(1)").Eq(0).Text()
-	book.Format = B.Find("div.property__file").Find(".property_value").Text()
+	book.Format = B.Find("div.bookDetailsBox").Find("div.property__file").Find(".property_value").Text()
 	book.URL, _ = B.ResolveStringUrl(url)
+	book.FileName = book.Author + " - " + book.Name + ".epub"
 
 	//print book info
-	fmt.Println("\nBook: ", book.Name)
+	fmt.Println("\nName: ", book.Name)
 	fmt.Println("Author: ", book.Author)
 	fmt.Println("Format :", book.Format)
-	fmt.Println("URL:", book.URL, "\n")
+	fmt.Println("URL:", book.URL)
 
 	// get download link
 	_, bool := B.Find("a.addDownloadedBook").Attr("href")
@@ -181,7 +185,6 @@ func Query(query string) Output {
 
 	//return
 	O.Book = book
-
 	return O
 }
 
