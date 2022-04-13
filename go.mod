@@ -4,11 +4,13 @@ go 1.18
 
 replace example.com/headless => ./headless/
 
+replace example.com/zlibrary => ./zlibrary/
+
 require (
 	example.com/headless v0.0.0-00010101000000-000000000000
 	example.com/myip v0.0.0-00010101000000-000000000000
 	example.com/stock v0.0.0-00010101000000-000000000000
-	example.com/zlib v0.0.0-00010101000000-000000000000
+	example.com/zlibrary v0.0.0-00010101000000-000000000000
 	github.com/gin-gonic/contrib v0.0.0-20201101042839-6a891bf89f19
 	github.com/gin-gonic/gin v1.7.7
 )
@@ -74,7 +76,5 @@ require (
 )
 
 replace example.com/stock => ./stock/
-
-replace example.com/zlib => ./zlib/
 
 replace example.com/myip => ./myip/

@@ -4,7 +4,7 @@ import (
 	"example.com/headless"
 	"example.com/myip"
 	"example.com/stock"
-	"example.com/zlib"
+	"example.com/zlibrary"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -22,12 +22,13 @@ func zlib_do(c *gin.Context) {
 	log.Println("Doing zlib, IP: ", myip.GetIP())
 	var f Zlib
 	c.Bind(&f)
-	o := zlib.DownloadBook(f.Query)
+	o := zlibrary.Query(f.Query)
 	c.JSON(200, gin.H{
-		"error": o.Error,
-		"url":   o.URL,
-		"name":  o.Name,
-		"file":  o.File,
+		"error":  o.Error,
+		"url":    o.UploadURL,
+		"name":   o.Name,
+		"file":   o.FileName,
+		"format": o.Format,
 	})
 }
 func headless_do(c *gin.Context) {

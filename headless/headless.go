@@ -3,6 +3,7 @@ package headless
 import (
 	"context"
 	// "fmt"
+	"fmt"
 	"github.com/chromedp/chromedp"
 	"log"
 	"os"
@@ -73,7 +74,7 @@ func GetRedirectURL(u string) string {
 		log.Fatal(err)
 	}
 
-	log.Println(title, loc)
+	fmt.Println(loc)
 
 	return loc
 }
