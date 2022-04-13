@@ -86,11 +86,6 @@ func downloadBook(url string) {
 	fr := strings.Split(book.Format, ",")
 	unit := strings.Split(fr[1], " ")
 	size, _ := strconv.ParseFloat(unit[1], 32)
-	// fmt.Println(size, byte[2], byte[1])
-	fmt.Println(size)
-	fmt.Println(unit[1])
-	fmt.Println(unit[2])
-
 	if unit[2] == "MB" {
 		if size > 8 {
 			panic("Greater file")
