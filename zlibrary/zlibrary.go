@@ -136,7 +136,7 @@ func Query(query string) Output {
 
 	base := headless.GetRedirectURL("https://1lib.domains/?redirectUrl=/")
 	if base == "https://1lib.domains/?redirectUrl=/" {
-		base := Fallback
+		base = Fallback
 	}
 	URL := base + "s/" + query + Filters
 	fmt.Println("Querying ", query)
