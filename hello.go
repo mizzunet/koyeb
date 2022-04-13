@@ -34,7 +34,7 @@ func zlib_do(c *gin.Context) {
 func headless_do(c *gin.Context) {
 	u := headless.GetRedirectURL("https://1lib.domains/?redirectUrl=/")
 	log.Println(u)
-	log.Println("Doing headless")
+	log.Println("headless")
 	i := headless.Scrape()
 	c.JSON(200, gin.H{
 		"scrape": i,
