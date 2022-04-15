@@ -15,7 +15,7 @@ type Zlib struct {
 }
 
 type DATA struct {
-	status, sensex, nifty string
+	date, status, sensex, nifty string
 }
 
 func zlib_do(c *gin.Context) {
@@ -44,13 +44,14 @@ func zlib_do(c *gin.Context) {
 func stock_do(c *gin.Context) {
 	log.Println("Doing stock")
 	var i DATA
-	i.status, i.sensex, i.nifty = stock.Parse()
+	i.date, i.status, i.sensex, i.nifty = stock.Parse()
 	c.JSON(200, gin.H{
 		// "hey":   "there",
 		// "hello": i,
 		"SENSEX": i.sensex,
 		"NIFTY":  i.nifty,
 		"STATUS": i.status,
+		"DATE":   i.date,
 	})
 }
 func main() {
