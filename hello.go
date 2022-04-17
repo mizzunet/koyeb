@@ -12,15 +12,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var ip string
-
 type Zlib struct {
 	Query string `form:"q"`
 }
 
-type DATA struct {
-	date, status, sensex, nifty string
+type Stock struct {
+	Date, Status, Sensex, Nifty string
 }
+
+var ip string
 
 func getIP() string {
 	url := "https://api.ipify.org?format=text" // we are using a pulib IP API, we're using ipify here, below are some others
@@ -42,12 +42,12 @@ func zlib_do(c *gin.Context) {
 	c.Bind(&f)
 	o := zlibrary.Query(f.Query)
 	c.JSON(200, gin.H{
-		"IP":     getIP(),
-		"ERROR":  o.Error,
-		"URL":    o.UploadURL,
-		"NAME":   o.Name,
-		"FILE":   o.FileName,
-		"FORMAT": o.Format,
+		"IP":    getIP(),
+		"ERROR": o.Error,
+		"URL":   o.UploadURL,
+		"NAME":  o.Name,
+		"FILE":  o.FileName,
+		"SIZE":  o.Size,
 	})
 }
 
@@ -62,20 +62,17 @@ func zlib_do(c *gin.Context) {
 // }
 func getStock(c *gin.Context) {
 	log.Println("Doing stock")
-	var i DATA
-	i.date, i.status, i.sensex, i.nifty = stock.Parse()
+	var i Stock
+	i.Date, i.Status, i.Sensex, i.Nifty = stock.Parse()
 	c.JSON(200, gin.H{
-		// "hey":   "there",
-		// "hello": i,
 		"IP":     getIP(),
-		"SENSEX": i.sensex,
-		"NIFTY":  i.nifty,
-		"STATUS": i.status,
-		"DATE":   i.date,
+		"SENSEX": i.Sensex,
+		"NIFTY":  i.Nifty,
+		"STATUS": i.Status,
+		"DATE":   i.Date,
 	})
 }
 func main() {
-	// fmt.Println(i.status)
 	log.Println("Starting")
 	r := gin.Default()
 
@@ -88,6 +85,7 @@ func main() {
 	api.GET("/stock", getStock)
 	// api.GET("/headless", headless_do)
 	r.GET("/zlib", zlib_do)
+
 	r.Use(static.Serve("/", static.LocalFile("./views", true)))
 
 	r.Run()

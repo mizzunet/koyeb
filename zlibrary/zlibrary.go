@@ -1,5 +1,3 @@
-// package main
-
 package zlibrary
 
 import (
@@ -21,7 +19,7 @@ type Book struct {
 	FileName  string
 	URL       string
 	UploadURL string
-	Format    string
+	Size      string
 }
 
 type Output struct {
@@ -38,8 +36,8 @@ var (
 
 	FileName string
 	Filters  = "?extensions[]=epub"
-	Fallback = "https://u1lib.org/"
-	// Fallback = "https://1lib.in/"
+	// Fallback = "https://u1lib.org/"
+	Fallback = "https://1lib.in/"
 )
 
 func prepareFile(b Book) *os.File {
@@ -78,24 +76,27 @@ func downloadBook(url string) {
 	// store book info
 	book.Name = strings.TrimSpace(B.Find(".col-sm-9 > h1:nth-child(1)").Text())
 	book.Author = B.Find(".col-sm-9 > i:nth-child(2) > a:nth-child(1)").Eq(0).Text()
-	book.Format = B.Find("div.bookDetailsBox").Find("div.property__file").Find(".property_value").Eq(0).Text()
 	book.URL, _ = B.ResolveStringUrl(url)
 	book.FileName = book.Author + " - " + book.Name + ".epub"
 
 	// panic if greater size
-	fr := strings.Split(book.Format, ",")
-	unit := strings.Split(fr[1], " ")
+	format := B.Find("div.bookDetailsBox").Find("div.property__file").Find(".property_value").Eq(0).Text()
+	ext := strings.Split(format, ",")
+	unit := strings.Split(ext[1], " ")
 	size, _ := strconv.ParseFloat(unit[1], 32)
 	if unit[2] == "MB" {
 		if size > 8 {
-			panic("Greater file")
+			O.Error = "Larger file"
+			panic("Larger file")
 		}
 	}
+
+	book.Size = fmt.Sprintf("%.2f", size) + unit[2]
 
 	//print book info
 	fmt.Println("\nName: ", book.Name)
 	fmt.Println("Author: ", book.Author)
-	fmt.Println("Format :", book.Format)
+	fmt.Println("Size :", book.Size)
 	fmt.Println("URL:", book.URL)
 
 	// get download link
@@ -124,7 +125,7 @@ func downloadBook(url string) {
 		fmt.Println("Failed to download ", err)
 		O.Error = "Failed to download "
 	}
-	fmt.Println("Downloaded!\n")
+	fmt.Println("Downloaded!")
 
 	defer file.Close()
 }
@@ -201,8 +202,3 @@ func Query(query string) Output {
 	O.Book = book
 	return O
 }
-
-// func main() {
-// query := strings.Join(os.Args[1:], " ")
-// Query(query)
-// }
