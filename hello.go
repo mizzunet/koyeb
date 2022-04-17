@@ -2,13 +2,17 @@ package main
 
 import (
 	// "example.com/headless"
-	"example.com/myip"
+	"io/ioutil"
+	"log"
+	"net/http"
+
 	"example.com/stock"
 	"example.com/zlibrary"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
-	"log"
 )
+
+var ip string
 
 type Zlib struct {
 	Query string `form:"q"`
@@ -18,17 +22,32 @@ type DATA struct {
 	date, status, sensex, nifty string
 }
 
+func getIP() string {
+	url := "https://api.ipify.org?format=text" // we are using a pulib IP API, we're using ipify here, below are some others
+
+	resp, err := http.Get(url)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	ip, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	return string(ip)
+}
 func zlib_do(c *gin.Context) {
-	log.Println("Doing zlib, IP: ", myip.GetIP())
 	var f Zlib
 	c.Bind(&f)
 	o := zlibrary.Query(f.Query)
 	c.JSON(200, gin.H{
-		"error":  o.Error,
-		"url":    o.UploadURL,
-		"name":   o.Name,
-		"file":   o.FileName,
-		"format": o.Format,
+		"IP":     getIP(),
+		"ERROR":  o.Error,
+		"URL":    o.UploadURL,
+		"NAME":   o.Name,
+		"FILE":   o.FileName,
+		"FORMAT": o.Format,
 	})
 }
 
@@ -41,13 +60,14 @@ func zlib_do(c *gin.Context) {
 // "scrape": i,
 // })
 // }
-func stock_do(c *gin.Context) {
+func getStock(c *gin.Context) {
 	log.Println("Doing stock")
 	var i DATA
 	i.date, i.status, i.sensex, i.nifty = stock.Parse()
 	c.JSON(200, gin.H{
 		// "hey":   "there",
 		// "hello": i,
+		"IP":     getIP(),
 		"SENSEX": i.sensex,
 		"NIFTY":  i.nifty,
 		"STATUS": i.status,
@@ -65,7 +85,7 @@ func main() {
 
 	api := r.Group("/api")
 
-	api.GET("/stock", stock_do)
+	api.GET("/stock", getStock)
 	// api.GET("/headless", headless_do)
 	r.GET("/zlib", zlib_do)
 	r.Use(static.Serve("/", static.LocalFile("./views", true)))
