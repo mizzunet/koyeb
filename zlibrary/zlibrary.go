@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/root-gg/plik/plik"
+	// "github.com/root-gg/plik/plik"
+	"example.com/plik"
 	"gopkg.in/headzoo/surf.v1"
 
 	// "log"
@@ -131,23 +132,23 @@ func downloadBook(url string) {
 	defer file.Close()
 }
 
-func uploadBook() string {
-	client := plik.NewClient("https://plik.root.gg")
+// func uploadBook() string {
+// 	client := plik.NewClient("https://plik.root.gg")
 
-	upload := client.NewUpload()
-	file, err := upload.AddFileFromPath(FilePath)
-	fmt.Println("Uploading ", FilePath)
+// 	upload := client.NewUpload()
+// 	file, err := upload.AddFileFromPath(FilePath)
+// 	fmt.Println("Uploading ", FilePath)
 
-	err = file.Upload()
-	if err != nil {
-		fmt.Println("Failed to upload", err)
-	}
-	fileURL, err := file.GetURL()
-	fmt.Println("Uploaded!")
-	fmt.Println(fileURL)
+// 	err = file.Upload()
+// 	if err != nil {
+// 		fmt.Println("Failed to upload", err)
+// 	}
+// 	fileURL, err := file.GetURL()
+// 	fmt.Println("Uploaded!")
+// 	fmt.Println(fileURL)
 
-	return fileURL.String()
-}
+// 	return fileURL.String()
+// }
 
 func Query(query string) Output {
 	if query == "" {
@@ -197,7 +198,9 @@ func Query(query string) Output {
 	downloadBook(book.URL)
 
 	//upload
-	book.UploadURL = uploadBook()
+	// book.UploadURL = uploadBook()
+	book.UploadURL = plik.UploadFile(FilePath)
+	fmt.Printf("Downladed: %s", book.UploadURL)
 
 	//return
 	O.Book = book

@@ -7,8 +7,6 @@ replace example.com/headless => ./headless/
 replace example.com/zlibrary => ./zlibrary/
 
 require (
-	example.com/headless v0.0.0-00010101000000-000000000000
-	example.com/myip v0.0.0-00010101000000-000000000000
 	example.com/stock v0.0.0-00010101000000-000000000000
 	example.com/zlibrary v0.0.0-00010101000000-000000000000
 	github.com/gin-gonic/contrib v0.0.0-20201101042839-6a891bf89f19
@@ -16,15 +14,13 @@ require (
 )
 
 require (
+	example.com/plik v0.0.0-00010101000000-000000000000 // indirect
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/PuerkitoBio/goquery v1.8.0 // indirect
 	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/antchfx/htmlquery v1.2.3 // indirect
 	github.com/antchfx/xmlquery v1.2.4 // indirect
 	github.com/antchfx/xpath v1.1.8 // indirect
-	github.com/chromedp/cdproto v0.0.0-20220321060548-7bc2623472b3 // indirect
-	github.com/chromedp/chromedp v0.8.0 // indirect
-	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgrijalva/jwt-go v3.2.1-0.20180921172315-3af4c746e1c2+incompatible // indirect
 	github.com/dustin/go-humanize v1.0.1-0.20200219035652-afde56e7acac // indirect
@@ -33,9 +29,6 @@ require (
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
-	github.com/gobwas/httphead v0.1.0 // indirect
-	github.com/gobwas/pool v0.2.1 // indirect
-	github.com/gobwas/ws v1.1.0 // indirect
 	github.com/gocolly/colly/v2 v2.1.0 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
@@ -44,11 +37,9 @@ require (
 	github.com/jinzhu/copier v0.0.0-20190924061706-b57f9002281a // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.2 // indirect
-	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
-	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
@@ -78,3 +69,5 @@ require (
 replace example.com/stock => ./stock/
 
 replace example.com/myip => ./myip/
+
+replace example.com/plik => ./plik
