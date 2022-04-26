@@ -80,9 +80,10 @@ func main() {
 		c.String(200, "Hello, World!")
 	})
 
-	api := r.Group("/api")
+	// api := r.Group("/api")
 
-	api.GET("/stock", getStock)
+	// api.GET("/stock", getStock)
+	r.GET("/stock", getStock)
 	// api.GET("/headless", headless_do)
 	r.GET("/zlib", zlib_do)
 
